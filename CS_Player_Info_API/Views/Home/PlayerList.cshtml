@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Player List";
+}
+
+<style>
+    /* Custom styles */
+    body {
+        font-family: Arial, sans-serif; /* Use a common sans-serif font */
+        background-color: #f8f9fa; /* Light grey background */
+        padding-top: 4.5rem; /* Space for fixed navbar */
+    }
+
+    .container {
+        margin-top: 20px; /* Space above content */
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse; /* Collapse table borders */
+        margin-top: 20px;
+        background-color: #ffffff; /* White background for table */
+        box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for table */
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: center; /* Center align text in cells */
+            vertical-align: middle;
+        }
+
+        .table thead {
+            background-color: #343a40; /* Dark background for table header */
+            color: #ffffff; /* White text for table header */
+        }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #e9ecef; /* Alternate row background color */
+    }
+
+    .table-striped tbody tr:hover {
+        background-color: #c8ced3; /* Hover background color */
+    }
+
+    .table-actions {
+        white-space: nowrap; /* Prevent line breaks in action buttons */
+    }
+
+    .btn {
+        padding: 6px 12px; /* Adjust button padding */
+        font-size: 14px; /* Font size for buttons */
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Primary button color */
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9; /* Darker hover color */
+            border-color: #0062cc;
+        }
+
+    .btn-danger {
+        background-color: #dc3545; /* Danger button color */
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker hover color */
+            border-color: #bd2130;
+        }
+</style>
+
+<div class="container">
+    <h2>Player List</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Country</th>
+                    <th>Age</th>
+                    <th>Role</th>
+                    <th>Rating</th>
+                    <th>Primary Weapon</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="playerListTable">
+                <!-- Rows will be added dynamically here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/api/PlayerInfo/Get",
+                dataType: "json",
+                success: function (data) {
+                    var table = $('#playerListTable');
+                    $.each(data, function (index, player) {
+                        var row = '<tr>';
+                        row += '<td>' + player.Name + '</td>';
+                        row += '<td>' + player.Team + '</td>';
+                        row += '<td>' + player.Country + '</td>';
+                        row += '<td>' + player.Age + '</td>';
+                        row += '<td>' + player.Role + '</td>';
+                        row += '<td>' + player.Rating + '</td>';
+                        row += '<td>' + player.PrimaryWeapon + '</td>';
+                        row += '<td class="table-actions">';
+                        row += '<a href="/Home/Edit/' + player.Id + '" class="btn btn-primary btn-sm">Edit</a>';
+                        row += ' <a href="/Home/Delete/' + player.Id + '" class="btn btn-danger btn-sm">Delete</a>';
+                        row += '</td>';
+                        row += '</tr>';
+                        table.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Error: " + error);
+                }
+            });
+        });
+    </script>
+}

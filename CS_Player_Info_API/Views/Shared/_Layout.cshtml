@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - CS2 Player Info</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        /* Custom global styles */
+        body {
+            padding-top: 3.5rem; /* Top padding to accommodate navbar */
+            font-family: Arial, sans-serif; /* Specify a common font */
+            background-color: #f8f9fa; /* Light grey background */
+        }
+
+        .navbar {
+            margin-bottom: 20px; /* Bottom margin for navbar */
+            padding-top: 0.5rem; /* Top padding reduced */
+            padding-bottom: 0.5rem; /* Bottom padding reduced */
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem; /* Adjusted font size */
+        }
+
+        .navbar-toggler {
+            font-size: 1rem; /* Adjusted font size */
+        }
+
+        .navbar-nav {
+            font-size: 1rem; /* Adjusted font size */
+        }
+
+        .jumbotron {
+            background-color: #ffffff; /* White background */
+            padding: 4rem 2rem; /* Increased padding */
+            margin-top: 3rem; /* Adjusted margin */
+            border-radius: 0.5rem; /* Slightly rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: center; /* Center align content */
+        }
+
+            .jumbotron h1 {
+                font-size: 3.5rem;
+                font-weight: bold;
+                margin-bottom: 2rem;
+                color: #343a40; /* Dark text color */
+            }
+
+            .jumbotron p {
+                font-size: 1.25rem;
+                margin-bottom: 2rem;
+                color: #6c757d; /* Medium grey text color */
+            }
+
+        .cs-logo {
+            max-width: 200px; /* Ensure logo does not overflow */
+            height: auto;
+            display: block; /* Center align logo */
+            margin: 0 auto 2rem; /* Center align logo and add bottom margin */
+        }
+
+        .container {
+            margin-top: 3rem; /* Spacing above the content sections */
+        }
+
+        .col-md-4 {
+            margin-bottom: 2rem; /* Space between columns */
+            text-align: center; /* Center align content in columns */
+        }
+
+            .col-md-4 h2 {
+                font-size: 2rem;
+                font-weight: bold;
+                margin-bottom: 1rem;
+                color: #343a40; /* Dark text color */
+            }
+
+            .col-md-4 ul {
+                list-style-type: none; /* Remove bullet points */
+                padding: 0;
+            }
+
+                .col-md-4 ul li {
+                    font-size: 1.25rem;
+                    margin-bottom: 0.5rem;
+                    color: #6c757d; /* Medium grey text color */
+                }
+
+        footer {
+            margin-top: 3rem; /* Spacing above the footer */
+            text-align: center; /* Center align footer content */
+            color: #6c757d; /* Medium grey text color */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark fixed-top">
+        <div class="container">
+            @Html.ActionLink("Counter Strike 2", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Player List", "PlayerList", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Add Player", "AddPlayer", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year -My Favourite CS2 Professional Player Information</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

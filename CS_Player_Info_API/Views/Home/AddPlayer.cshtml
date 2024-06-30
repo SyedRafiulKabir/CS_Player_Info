@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Add Player";
+}
+
+<style>
+    /* Custom styles for Add Player form */
+    body {
+        font-family: Arial, sans-serif; /* Use a common sans-serif font */
+        background-color: #f8f9fa; /* Light grey background */
+        padding-top: 4.5rem; /* Space for fixed navbar */
+    }
+
+    .container {
+        max-width: 600px; /* Limit width of the form */
+        margin-top: 50px; /* Space from top */
+    }
+
+    .card {
+        border: none; /* Remove border */
+        border-radius: 10px; /* Rounded corners for card */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card */
+    }
+
+    .card-body {
+        padding: 2rem; /* Padding inside card body */
+    }
+
+    .form-label {
+        font-weight: bold; /* Bold labels */
+    }
+
+    .form-control {
+        margin-bottom: 1rem; /* Space between form controls */
+    }
+
+    .btn-primary {
+        width: 100%; /* Full-width button */
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="mb-4">Add Player</h2>
+
+            <form id="addPlayerForm">
+                <div class="form-group">
+                    <label for="Name" class="form-label">Name</label>
+                    <input type="text" id="Name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="Team" class="form-label">Team</label>
+                    <input type="text" id="Team" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="Country" class="form-label">Country</label>
+                    <input type="text" id="Country" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="Age" class="form-label">Age</label>
+                    <input type="number" id="Age" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="Role" class="form-label">Role</label>
+                    <input type="text" id="Role" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="Rating" class="form-label">Rating</label>
+                    <input type="text" id="Rating" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="PrimaryWeapon" class="form-label">Primary Weapon</label>
+                    <input type="text" id="PrimaryWeapon" class="form-control" required>
+                </div>
+                <button type="submit" id="addPlayerBtn" class="btn btn-primary">Add Player</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addPlayerForm').submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                var player = {
+                    Name: $('#Name').val(),
+                    Team: $('#Team').val(),
+                    Country: $('#Country').val(),
+                    Age: $('#Age').val(),
+                    Role: $('#Role').val(),
+                    Rating: $('#Rating').val(),
+                    PrimaryWeapon: $('#PrimaryWeapon').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/PlayerInfo/Insert",
+                    data: JSON.stringify(player),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        alert("Player added successfully!");
+                        $('#addPlayerForm')[0].reset(); // Reset form after successful submission
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+}
